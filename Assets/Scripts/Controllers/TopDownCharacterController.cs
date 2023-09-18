@@ -19,7 +19,12 @@ public class TopDownCharacterController : MonoBehaviour
     //Attack에 대한 프로퍼티 //프로퍼티 == 변수 | 접근제한자 설정가능
     protected bool IsAttacking { get; set; }
 
+    protected CharcterStatsHandler Stats { get; private set; }
 
+    protected virtual void Awake()
+    {
+        Stats = GetComponent<CharcterStatsHandler>();
+    }
     //이동
     public void CallMoveEvent(Vector2 direction)
     {
@@ -46,13 +51,16 @@ public class TopDownCharacterController : MonoBehaviour
 
     private void HandleAttackDelay()
     {
+        if (Stats.CurrentStates.attackSO == null)
+            return;
+
         //딜레이
-        if(tiemSinceLastAttack <= 0.2f) //TODO
+        if(tiemSinceLastAttack <= Stats.CurrentStates.attackSO.delay) //TODO
         {
             tiemSinceLastAttack += Time.deltaTime;
         }
 
-        if(IsAttacking && tiemSinceLastAttack > 0.2f)
+        if(IsAttacking && tiemSinceLastAttack > Stats.CurrentStates.attackSO.delay)
         {
             tiemSinceLastAttack = 0;
             CallAttackEvent();

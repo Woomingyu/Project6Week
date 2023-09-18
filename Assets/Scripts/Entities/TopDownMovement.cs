@@ -6,6 +6,7 @@ using UnityEngine;
 public class TopDownMovement : MonoBehaviour
 {
     private TopDownCharacterController controller;
+    private CharcterStatsHandler _stats;
 
     private Vector2 movementDirection = Vector2.zero;
     private Rigidbody2D rigidbody;
@@ -16,6 +17,7 @@ public class TopDownMovement : MonoBehaviour
         //그래서 플레이어에서도 문제없이 TopDownCharacterController 호출가능
         controller = GetComponent<TopDownCharacterController>();
         rigidbody = GetComponent<Rigidbody2D>();
+        _stats = GetComponent<CharcterStatsHandler>();
     }
 
     private void Start()
@@ -39,7 +41,7 @@ public class TopDownMovement : MonoBehaviour
     //실제 이동
     private void ApplyMovment(Vector2 direction)
     {
-        direction = direction * 5;
+        direction = direction * 5 * _stats.CurrentStates.speed;
 
         //가속도를 받아 rigidbody 이동
         rigidbody.velocity = direction;

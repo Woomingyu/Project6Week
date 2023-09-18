@@ -10,10 +10,11 @@ public class TopDownAimRotation : MonoBehaviour
 
     //바라보는 방향이 필요
     private TopDownCharacterController controller;
+    
 
     private void Awake()
     {
-        controller = GetComponent<TopDownCharacterController>();
+        controller = GetComponent<TopDownCharacterController>();       
     }
     void Start()
     {
